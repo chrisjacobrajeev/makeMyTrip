@@ -18,20 +18,20 @@ pipeline {
 
         stage('Build Docker Image') {
            steps {
-                sh 'docker build -t makeMyTrip .'
+                sh 'docker build -t makemytrip .'
            }
          }
 
         stage('Upload Docker Image to AWS ECR') {
             steps {
 			   script {
-			      withDockerRegistry([credentialsId:'ecr:ap-south-1:ecr-credentials', url:"https://340866772701.dkr.ecr.ap-south-1.amazonaws.com"]){
+			      withDockerRegistry([credentialsId:'ecr:ap-south-1:makemytrip-ecr', url:"https://865615325866.dkr.ecr.ap-south-1.amazonaws.com"]){
                   sh """
 				  echo "Tagging the Docker Image: In Progress"
-				  docker tag makeMyTrip:latest 340866772701.dkr.ecr.ap-south-1.amazonaws.com/makeMyTrip:$TAG
+				  docker tag makemytrip:latest 865615325866.dkr.ecr.ap-south-1.amazonaws.com/makemytrip:1.0.1
 				  echo "Tagging the Docker Image: Completed"
 				  echo "Push Docker Image to ECR : In Progress"
-				  docker push 340866772701.dkr.ecr.ap-south-1.amazonaws.com/makeMyTrip:latest
+				  docker push 865615325866.dkr.ecr.ap-south-1.amazonaws.com/makemytrip:1.0.1
 				  echo "Push Docker Image to ECR : Completed"
 				  """
 				  }
